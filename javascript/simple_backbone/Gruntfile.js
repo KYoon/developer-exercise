@@ -34,13 +34,24 @@ module.exports = function(grunt) {
                 "templates/templates.js": ["templates/**/*.jst"]
               }
             }
-          }
+          },
+
+        concat: {
+          options: {
+            separator: '\n',
+          },
+          dist: {
+            src: ['collections/**','models/**','views/**'],
+            dest: 'backbone_concat.js',
+          },
+        }
         });
 
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-contrib-jst');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
     // Default task
-    grunt.registerTask('default', ['jst']);
+    grunt.registerTask('default', ['jst', 'concat']);
 
   };

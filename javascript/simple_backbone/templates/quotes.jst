@@ -1,10 +1,35 @@
-<ul>
+<table>
+  <th>Source</th>
+  <th>Context</th>
+  <th>Quote</th>
+  <th>Theme</th>
 <% this.collection.forEach(function(quote){ %>
-  <%= "<li>" + quote.attributes.quote + "</li>" %>
+  <tr>
+  <%= "<td>" + quote.attributes.source + "</td>" %>
+  <%= "<td>" + quote.attributes.context + "</td>" %>
+  <%= "<td>" + quote.attributes.quote + "</td>" %>
+  <%= "<td>" + quote.attributes.theme + "</td>" %>
+  </tr>
 <% }); %>
-</ul>
+</table>
 
-<% if ((this.collection.state.totalPages - 1) !== this.collection.state.currentPage){ %>
-  <%= this.collection.state.totalPages %>
-  <%= '<a href="#">Next Page</a>' %>
+<!-- Needs Refactoring -->
+
+<% if (this.collection.state.firstPage !== this.collection.state.currentPage){ %>
+  <%= '<a href="#" class="first">First</a> <a href="#" class="previous">Previous</a> <a href="#" class="first">1</a>' %>
+<% } else { %>
+  <%= 'First Previous 1' %>
+<% } %>
+
+<% if ((this.collection.state.currentPage) !== 1){ %>
+  <%= '<a href="#" class="2">2</a>' %>
+<% } else { %>
+  <%= '2' %>
+<% } %>
+
+
+<% if ((this.collection.state.lastPage) !== this.collection.state.currentPage){ %>
+  <%= '<a href="#" class="last">3</a> <a href="#" class="next">Next</a> <a href="#" class="last">Last</a>' %>
+<% } else { %>
+  <%= '3 Next Last' %>
 <% } %>
