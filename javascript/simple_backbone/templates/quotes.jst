@@ -3,3 +3,8 @@
   <%= "<li>" + quote.attributes.quote + "</li>" %>
 <% }); %>
 </ul>
+
+<% if ((this.collection.state.totalPages - 1) !== this.collection.state.currentPage){ %>
+  <%= this.collection.state.totalPages %>
+  <%= '<a href="#">Next Page</a>' %>
+<% } %>
