@@ -32,8 +32,8 @@ class Runner
     if input == "get count"
       puts @player.count_hand_value
       inputting
-    elsif input == "get count"
-      puts @player.count_hand_value
+    elsif input == "hit"
+      @player.cards << @deck.deal_card
       inputting
     end
   end
