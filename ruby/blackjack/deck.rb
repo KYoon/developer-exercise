@@ -1,3 +1,5 @@
+require_relative "card"
+
 class Deck
   attr_accessor :playable_cards
   SUITES = [:hearts, :diamonds, :spades, :clubs]
@@ -16,21 +18,21 @@ class Deck
     :king  => 10,
     :ace   => [11, 1]}
 
-    def initialize
-      shuffle
-    end
+  def initialize
+    shuffle
+  end
 
-    def deal_card
-      random = rand(@playable_cards.size)
-      @playable_cards.delete_at(random)
-    end
+  def deal_card
+    random = rand(@playable_cards.size)
+    @playable_cards.delete_at(random)
+  end
 
-    def shuffle
-      @playable_cards = []
-      SUITES.each do |suite|
-        NAME_VALUES.each do |name, value|
-          @playable_cards << Card.new(suite, name, value)
-        end
+  def shuffle
+    @playable_cards = []
+    SUITES.each do |suite|
+      NAME_VALUES.each do |name, value|
+        @playable_cards << Card.new(suite, name, value)
       end
     end
   end
+end
