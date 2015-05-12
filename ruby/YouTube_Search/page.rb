@@ -1,4 +1,5 @@
 require 'openssl'
+
 class Page
   attr_reader :url
 
@@ -28,22 +29,10 @@ class Page
     @nokogiri_obj.search('title').inner_text
   end
 
-  def display
-    @nokogiri_obj
-  end
-
-  def links
-    @nokogiri_obj.search('a').map { |link| link['href']}
-    # Research alert!
-    # How do you use Nokogiri to extract all the link URLs on a page?
-    #
-    # These should only be URLs that look like
-    #   <a href="http://somesite.com/page.html">Click here!</a>
-    # This would pull out "http://somesite.com/page.html"
-  end
-
-  def paragraph_text
-    @nokogiri_obj.search('p').inner_text
+  def video_links
+    links = @nokogiri_obj.search('a').map { |link| link['href']}
+    video_links = links.select { |link| link[/\/watch\?v=.*/]}
+    video_links.uniq![0..2]
   end
 
 end
