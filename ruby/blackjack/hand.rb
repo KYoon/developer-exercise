@@ -39,7 +39,6 @@ class Hand
   end
 
   def bust?
-    self.count_hand_value
     if @count > 21
       @lose = true
       true
@@ -49,7 +48,6 @@ class Hand
   end
 
   def blackjack?
-    self.count_hand_value
     if @count == 21
       @win = true
       true

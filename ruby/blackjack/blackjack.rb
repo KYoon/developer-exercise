@@ -10,7 +10,8 @@ class Runner
 
   def play
     initial_deal
-    puts "Dealer has one face down card and the other a #{@dealer.cards.last.name} of #{@dealer.cards.last.suite}."
+    # puts "Dealer has one face down card and the other a #{@dealer.cards.last.name} of #{@dealer.cards.last.suite}."
+    puts "Dealer has a #{@dealer.cards.first.name} of #{@dealer.cards.first.suite} and a #{@dealer.cards.last.name} of #{@dealer.cards.last.suite}."
     puts "You have a #{@player.cards.first.name} of #{@player.cards.first.suite} and a #{@player.cards.last.name} of #{@player.cards.last.suite}."
     if blackjack_check?
       return
@@ -26,6 +27,7 @@ class Runner
   end
 
   def blackjack_check?
+    count_hand_value_everyone
     if @player.blackjack?
       puts "You have won!"
       @player.win
@@ -45,6 +47,33 @@ class Runner
     end    
   end
 
+  def count_hand_value_everyone
+    @player.count_hand_value
+    @dealer.count_hand_value
+  end
+
+  def dealers_turn
+    new_card = @deck.deal_card
+    @dealer.cards << new_card
+    puts "The Dealer has:"
+    list_cards(@dealer)
+    puts "Dealer has recieved a #{new_card.name} of #{new_card.suite}."
+    puts "Dealer's count is: #{@dealer.count_hand_value}."
+    if bust_check?
+      return
+    end
+    if blackjack_check?
+      return
+    end
+    dealers_turn
+  end
+
+  def list_cards(person)
+    person.cards.each do |card|
+      puts "- #{card.name} of #{card.suite}"
+    end
+  end
+
   def inputting
     puts "What would you like to do?"
     input = $stdin.gets.chomp
@@ -53,9 +82,7 @@ class Runner
       inputting
     elsif input == "hand"
       puts "Your hand:"
-      @player.cards.each do |card|
-        puts "- #{card.name} of #{card.suite}"
-      end
+      list_cards(@player)
       inputting
     elsif input == "hit"
       new_card = @deck.deal_card
@@ -68,6 +95,8 @@ class Runner
         return
       end
       inputting
+    elsif input == "stay"
+      dealers_turn
     end
   end
 
