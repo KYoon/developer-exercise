@@ -13,7 +13,7 @@ class Hand
     aces_values = aces.map { |card| card.value }
     @count = values.reduce(:+)
     if aces.length > 0
-      add_aces_values(aces)
+      add_aces_values(aces_values)
     end
     @count
   end
@@ -23,7 +23,6 @@ class Hand
   end
 
   def add_aces_values(aces_values)
-    puts aces_values
     if bust? || aces_values.length == 0
       return
     else
@@ -38,7 +37,16 @@ class Hand
   end
 
   def bust?
+    self.count_hand_value
     if @count > 21
+      true
+    else
+      false
+    end
+  end
+
+  def blackjack?
+    if @count == 21
       true
     else
       false
