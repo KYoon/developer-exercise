@@ -1,4 +1,6 @@
 require 'minitest/autorun'
+require_relative 'deck'
+require_relative 'hand'
 
 class CardTest < Minitest::Test
   def setup
@@ -28,7 +30,7 @@ class DeckTest < Minitest::Test
   
   def test_dealt_card_should_not_be_included_in_playable_cards
     card = @deck.deal_card
-    assert(@deck.playable_cards.include?(card))
+    assert(!@deck.playable_cards.include?(card))
   end
 
   def test_shuffled_deck_has_52_playable_cards
