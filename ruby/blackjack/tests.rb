@@ -38,3 +38,31 @@ class DeckTest < Minitest::Test
     assert_equal @deck.playable_cards.size, 52
   end
 end
+
+class HandTest < Minitest::Test
+  def setup
+    @deck = Deck.new
+    @player = Hand.new
+    @jack = Card.new(:dimonds, :jack, 10)
+    @eight = Card.new(:hearts, :eight, 8)
+    @ace = Card.new(:spades, :ace, [11, 1])
+    @nine = Card.new(:clubs, :nine, 9)
+  end
+
+  def test_player_hand_has_correct_count
+    @player.cards.push(@jack, @eight)
+    assert_equal @player.count_hand_value, 18
+  end
+
+  def test_player_hand_has_blackjack
+    @player.cards.push(@jack, @ace)
+    @player.count_hand_value
+    assert_equal @player.blackjack?, true
+  end
+
+  def test_player_hand_has_busted
+    @player.cards.push(@jack, @nine, @eight)
+    @player.count_hand_value
+    assert_equal @player.bust?, true
+  end
+end
