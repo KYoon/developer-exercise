@@ -1,9 +1,11 @@
 class Hand
-  attr_accessor :cards
+  attr_accessor :cards, :win, :lose
 
   def initialize(dealer = false)
     @cards = []
     @count = 0
+    @win = false
+    @lose = false
   end
 
   def count_hand_value
@@ -39,6 +41,7 @@ class Hand
   def bust?
     self.count_hand_value
     if @count > 21
+      @lose = true
       true
     else
       false
@@ -46,7 +49,9 @@ class Hand
   end
 
   def blackjack?
+    self.count_hand_value
     if @count == 21
+      @win = true
       true
     else
       false
