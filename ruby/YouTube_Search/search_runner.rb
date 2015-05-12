@@ -22,21 +22,15 @@ class Search
     search_phrase = $stdin.gets.chomp
     page = navigate(space_replacer(search_phrase))
     input = ""
+    puts "Enter 'exit' to quit or 'new search' for a new search instance."
+    page.video_links.each do |link|
+      puts "http://www.youtube.com#{link}"
+    end
     until input == "exit"
       input = gets.chomp
       case input
-      when "url"
-        puts page.url
-      when "title"
-        puts page.title
-      when "links"
-        page.video_links.each do |link|
-          puts "http://www.youtube.com#{link}"
-        end
-      when /[\A\/]{1}.*/
-        new_url = page.url + input
-        puts new_url
-        page = navigate(new_url)
+      when "new search"
+        Search.new.run!
       end
     end
   end
