@@ -47,10 +47,6 @@ class Runner
     end    
   end
 
-  def conditional_check
-    
-  end
-
   def count_hand_value_everyone
     @player.count_hand_value
     @dealer.count_hand_value
@@ -92,42 +88,42 @@ class Runner
 
   def inputting
     puts "What would you like to do? (Enter 'help' for commands)"
-    input = $stdin.gets.chomp
-    if input == "get count"
-      puts @player.count_hand_value
-      inputting
-    elsif input == "hand"
-      puts "Your hand:"
-      list_cards(@player)
-      inputting
-    elsif input == "dealer hand"
-      dealers_initial_hand
-      inputting
-    elsif input == "hit"
-      new_card = @deck.deal_card
-      @player.cards << new_card
-      puts "You recieved a #{new_card.name} of #{new_card.suite}."
-      if bust_check?
+    input = ""
+    until input == "quit"
+      input = $stdin.gets.chomp
+      case input
+      when "get count"
+        puts @player.count_hand_value
+      when "hand"
+        puts "Your hand:"
+        list_cards(@player)
+      when "dealer hand"
+        dealers_initial_hand
+      when "hit"
+        new_card = @deck.deal_card
+        @player.cards << new_card
+        puts "You recieved a #{new_card.name} of #{new_card.suite}."
+        if bust_check?
+          return
+        end
+        if blackjack_check?
+          return
+        end
+      when "stay"
+        puts "The Dealer has:"
+        list_cards(@dealer)
+        dealers_turn
+        if bust_check?
+          return
+        end
+        if blackjack_check?
+          return
+        end
+        check_winner
         return
+      when "help"
+        puts "Commands are: get count, hand, dealer hand, hit, stay, quit."
       end
-      if blackjack_check?
-        return
-      end
-      inputting
-    elsif input == "stay"
-      puts "The Dealer has:"
-      list_cards(@dealer)
-      dealers_turn
-      if bust_check?
-        return
-      end
-      if blackjack_check?
-        return
-      end
-      check_winner
-    elsif input == "help"
-      puts "Commands are: get count, hand, dealer hand, hit, stay."
-      inputting
     end
   end
 
